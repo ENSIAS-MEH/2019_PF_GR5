@@ -1,0 +1,7 @@
+{
+"mail": {
+    "password": "app_password"
+},
+"jwtPrivateKey": "proche_jwtPrivateKey",
+"db": "proche_db"
+}

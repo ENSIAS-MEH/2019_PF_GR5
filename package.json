@@ -13,30 +13,30 @@
   },
   "author": "",
   "license": "ISC",
-    "dependencies": {
-      "nodemon": "^2.0.2",
-      "bcrypt": "^3.0.6",
-      "body-parser": "^1.19.0",
-      "compression": "^1.7.4",
-      "config": "^3.2.3",
-      "cors": "^2.8.5",
-      "debug": "^4.1.1",
-      "express": "^4.17.1",
-      "express-async-errors": "^3.1.1",
-      "fawn": "^2.1.5",
-      "helmet": "^3.21.2",
-      "joi": "^14.3.1",
-      "joi-objectid": "^3.0.1",
-      "jsonwebtoken": "^8.5.1",
-      "lodash": "^4.17.15",
-      "moment": "^2.24.0",
-      "mongoose": "^5.7.5",
-      "morgan": "^1.9.1",
-      "pug": "^2.0.4",
-      "winston": "^3.2.1"
-    },
-    "devDependencies": {
-      "jest": "^24.9.0",
-      "supertest": "^4.0.2"
-    }
+  "dependencies": {
+    "nodemon": "^2.0.2",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "config": "^3.2.3",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "fawn": "^2.1.5",
+    "helmet": "^3.21.2",
+    "joi": "^14.3.1",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.5",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.4",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  }
 }
