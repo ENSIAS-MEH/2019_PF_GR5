@@ -50,10 +50,12 @@ router.post('/', async (req, res) => {
     user = new User(_.pick(req.body, ['name', 'email', 'password']))
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
-    await user.save();
+    const user = await user.save();
     // const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey'));
     const token = user.genrateAuthToken();
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+    res.send(user);
+
 });
 
 
