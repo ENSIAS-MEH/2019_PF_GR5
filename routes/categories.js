@@ -33,7 +33,7 @@ router.post('/', auth, async (req, res) => {
     const { error } = validateCategory(req.body); // ES6 object distructuring feature
     if (error) return res.status(400).send(error.details[0].message); // 400 - bad request
 
-    let category = new Category({ name: req.body.name });
+    let category = new Category({ name: req.body.name, description: req.body.description });
     category = await category.save();
     res.send(category);
 });
