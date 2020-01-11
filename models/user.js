@@ -3,7 +3,6 @@ const Joi = require('joi'); // this is a class
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-
 var Schema = mongoose.Schema;
 
 const userSchema = new Schema({

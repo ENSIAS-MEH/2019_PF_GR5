@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.2",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -32,6 +31,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
     "pug": "^2.0.4",
     "winston": "^3.2.1"
   },

@@ -9,9 +9,11 @@ module.exports = function() {
     // debug('Mail Password : ' + config.get('mail.password'));
         
     
+    // proche_jwtPrivateKey=hhhhhhh node app.js
+
     // set proche_jwtPrivateKey=mySecureKey
     if (!config.get('jwtPrivateKey')) {
-        console.error('Fatala error the jwtPrivateKey is not defined');
+        console.error('Fatal error the jwtPrivateKey is not defined');
         process.exit(1);
         // 0 means success
         // anything beside 0 is failure
