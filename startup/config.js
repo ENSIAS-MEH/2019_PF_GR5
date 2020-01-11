@@ -9,7 +9,7 @@ module.exports = function() {
     // debug('Mail Password : ' + config.get('mail.password'));
         
     
-    // set vidly_jwtPrivatekey=blablabla
+    // set proche_jwtPrivateKey=mySecureKey
     if (!config.get('jwtPrivateKey')) {
         console.error('Fatala error the jwtPrivateKey is not defined');
         process.exit(1);

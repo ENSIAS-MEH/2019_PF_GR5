@@ -8,6 +8,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // for cross-orign requests
 // third-party middleware to secure the app by setting various http headers
 const config = require('config');
+
+
+
 // to view only the startup debugging
 // set DEBUG=app:startup
 // set DEBUG=app:db
