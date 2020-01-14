@@ -2,10 +2,17 @@ const mongoose = require("mongoose");
 const Joi = require("joi"); // this is a class
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const { subcategorySchema } = require("./subcategory");
 
 var Schema = mongoose.Schema;
 
 const professionnelSchema = new Schema({
+  biographie: {
+    type: String,
+    required: true,
+    minlength: 20,
+    maxlength: 5000
+  },
   name: {
     type: String,
     required: true,
@@ -14,7 +21,7 @@ const professionnelSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     minlength: 5,
     maxlength: 255,
     unique: true
@@ -35,7 +42,20 @@ const professionnelSchema = new Schema({
     required: true,
     minlength: 5,
     maxlength: 50
+  },
+  subcategory: [
+    {
+      type: subcategorySchema,
+      required: true
+    }
+  ],
+  address: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 1000
   }
+
   // roles: []
   // operations: []
 });
@@ -51,6 +71,10 @@ const Professionnel = mongoose.model("Professionnel", professionnelSchema);
 
 function validateUser(professionnel) {
   const schema = {
+    address: Joi.string()
+      .min(5)
+      .max(1000)
+      .required(),
     urlImage: Joi.string().uri(),
     phone: Joi.string()
       .min(5)
@@ -63,11 +87,14 @@ function validateUser(professionnel) {
     email: Joi.string()
       .min(5)
       .max(255)
-      .required()
       .email(),
     password: Joi.string()
       .min(5)
       .max(50)
+      .required(),
+    biographie: Joi.string()
+      .min(20)
+      .max(5000)
       .required()
   };
   return Joi.validate(professionnel, schema);
