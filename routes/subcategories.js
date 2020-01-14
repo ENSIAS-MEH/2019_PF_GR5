@@ -42,10 +42,12 @@ router.post("/", async (req, res) => {
   let subcategory = new SubCategory({
     name: req.body.name,
     description: req.body.description,
+    urlImage: req.body.urlImage,
     category: {
       _id: category._id,
       name: category.name,
-      description: category.description
+      description: category.description,
+      urlImage: category.urlImage
     }
   });
   subcategory = await subcategory.save();
@@ -78,10 +80,12 @@ router.put("/:id", async (req, res) => {
     {
       name: req.body.name,
       description: req.body.description,
+      urlImage: req.body.urlImage,
       category: {
         _id: category._id,
         name: category.name,
-        description: category.description
+        description: category.description,
+        urlImage: category.urlImage
       }
     },
     { new: true },
