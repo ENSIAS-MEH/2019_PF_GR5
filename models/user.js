@@ -26,7 +26,17 @@ const userSchema = new Schema({
     maxlength: 1024,
     unique: true
   },
-  isAdmin: Boolean
+  isAdmin: Boolean,
+  urlImage: {
+    type: String,
+    required: false
+  },
+  phone: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  }
   // roles: []
   // operations: []
 });
@@ -42,6 +52,11 @@ const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
   const schema = {
+    urlImage: Joi.string().uri(),
+    phone: Joi.string()
+      .min(5)
+      .max(50)
+      .required(),
     name: Joi.string()
       .min(5)
       .max(50)

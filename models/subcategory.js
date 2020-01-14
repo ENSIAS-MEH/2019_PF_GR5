@@ -20,6 +20,10 @@ const subcategoriesSchema = new Schema({
   category: {
     type: categorySchema,
     required: true
+  },
+  urlImage: {
+    type: String,
+    required: false
   }
 });
 
@@ -27,6 +31,7 @@ const SubCategory = mongoose.model("SubCategory", subcategoriesSchema);
 
 function validateSubCategory(subcategory) {
   const schema = {
+    urlImage: Joi.string().uri(),
     name: Joi.string()
       .min(5)
       .max(200)
