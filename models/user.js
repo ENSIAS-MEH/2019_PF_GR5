@@ -14,7 +14,7 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     minlength: 5,
     maxlength: 255,
     unique: true
@@ -64,7 +64,6 @@ function validateUser(user) {
     email: Joi.string()
       .min(5)
       .max(255)
-      .required()
       .email(),
     password: Joi.string()
       .min(5)
