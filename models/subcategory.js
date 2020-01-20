@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi"); // this is a class
-const { categorySchema } = require("./category");
+const { categoriesSchema } = require("./category");
 
 var Schema = mongoose.Schema;
 
@@ -18,7 +18,7 @@ const subcategoriesSchema = new Schema({
     maxlength: 5000
   },
   category: {
-    type: categorySchema,
+    type: categoriesSchema,
     required: true
   },
   urlImage: {

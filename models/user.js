@@ -16,8 +16,7 @@ const userSchema = new Schema({
     type: String,
     required: false,
     minlength: 5,
-    maxlength: 255,
-    unique: true
+    maxlength: 255
   },
   password: {
     type: String,
@@ -35,7 +34,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 50
+    maxlength: 50,
+    unique: true
   }
   // roles: []
   // operations: []
@@ -54,8 +54,8 @@ function validateUser(user) {
   const schema = {
     urlImage: Joi.string().uri(),
     phone: Joi.string()
-      .min(5)
-      .max(50)
+      .min(12)
+      .max(20)
       .required(),
     name: Joi.string()
       .min(5)
