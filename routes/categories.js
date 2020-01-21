@@ -76,7 +76,7 @@ router.put("/:id", validateObjectId, async (req, res) => {
 router.delete("/:id", [validateObjectId, auth, admin], async (req, res) => {
   // look up the category
   // if not existing, return 404 - not found
-  await category.findByIdAndDelete(req.params.id, function(err, category) {
+  await Category.findByIdAndDelete(req.params.id, function(err, category) {
     if (err) {
       if (!category)
         return res
