@@ -26,7 +26,7 @@ router.get("/me", auth, async (req, res) => {
         .status(404)
         .send(`The user with the id ${req.params.id} was not found`);
     }
-    res.send(_.pick(user, ["_id", "name", "phone", "email"]));
+    res.send(_.pick(user, ["_id", "name", "phone"]));
   });
 });
 
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
   //     phone: req.body.phone,
   //     password: req.body.password
   // });
-  user = new User(_.pick(req.body, ["name", "phone", "password", "email"]));
+  user = new User(_.pick(req.body, ["name", "phone", "password"]));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
   const token = user.genrateAuthToken();
   res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "phone", "email"]));
+    .send(_.pick(user, ["_id", "name", "phone"]));
   res.send(user);
 });
 
@@ -81,7 +81,7 @@ router.put("/:id", async (req, res) => {
             .send(`The user with the id ${req.params.id} was not found`);
       }
       // Return the updated user
-      res.send(_.pick(user, ["_id", "name", "phone", "email"]));
+      res.send(_.pick(user, ["_id", "name", "phone"]));
     }
   );
 });
@@ -97,7 +97,7 @@ router.delete("/:id", async (req, res) => {
           .send(`The user with the id ${req.params.id} was not found`);
     }
     // return the same user
-    res.send(_.pick(user, ["_id", "name", "phone", "email"]));
+    res.send(_.pick(user, ["_id", "name", "phone"]));
   });
 });
 

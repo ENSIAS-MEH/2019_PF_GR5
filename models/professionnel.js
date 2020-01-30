@@ -19,12 +19,6 @@ const professionnelSchema = new Schema({
     minlength: 5,
     maxlength: 50
   },
-  email: {
-    type: String,
-    required: false,
-    minlength: 5,
-    maxlength: 255
-  },
   password: {
     type: String,
     required: true,
@@ -84,10 +78,6 @@ function validateUser(professionnel) {
       .min(5)
       .max(50)
       .required(),
-    email: Joi.string()
-      .min(5)
-      .max(255)
-      .email(),
     password: Joi.string()
       .min(5)
       .max(50)
