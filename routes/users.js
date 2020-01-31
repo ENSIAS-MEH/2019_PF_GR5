@@ -4,16 +4,28 @@ const { User, validateUser } = require("../models/user");
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
 // npm i lodash
 // npm i bcrypt
 
-router.get("/", async (req, res) => {
+router.get("/", [auth, admin], async (req, res) => {
   User.find(function(err, users) {
     if (err) {
       return res.status(404).send(err.message);
     }
     res.send(users);
+  });
+});
+
+router.get("/:id", auth, async (req, res) => {
+  User.findById(req.params.id, function(err, user) {
+    if (err) {
+      return res
+        .status(404)
+        .send(`The subcategory with the id ${req.params.id} was not found`);
+    }
+    res.send(user);
   });
 });
 
