@@ -5,6 +5,7 @@ const home = require("../routes/home");
 const users = require("../routes/users");
 const auth = require("../routes/auth");
 const error = require("../middleware/error");
+const professionals = require("../routes/professionnels");
 
 module.exports = function(app) {
   app.use(express.json());
@@ -12,6 +13,7 @@ module.exports = function(app) {
   app.use("/api/users", users);
   app.use("/api/categories", categories);
   app.use("/api/subcategories", subcategories);
+  app.use("/api/professionals", professionals);
   app.use("/", home);
   app.use(error);
 };

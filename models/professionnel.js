@@ -12,11 +12,12 @@ const professionnelSchema = new Schema({
     minlength: 20,
     maxlength: 5000
   },
+  isProfessionnel: Boolean,
   name: {
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 50
+    maxlength: 200
   },
   password: {
     type: String,
@@ -93,23 +94,22 @@ professionnelSchema.methods.genrateAuthToken = function() {
 
 function validateProfessionnel(professionnel) {
   const schema = {
-    address: Joi.string()
-      .min(5)
-      .max(1000)
-      .required(),
-    urlImage: Joi.string().uri(),
     phone: Joi.string()
       .min(12)
       .max(20)
       .required(),
     name: Joi.string()
       .min(5)
-      .max(50)
+      .max(200)
       .required(),
     password: Joi.string()
       .min(5)
       .max(50)
       .required(),
+    address: Joi.string()
+      .min(5)
+      .max(1000),
+    urlImage: Joi.string().uri(),
     biographie: Joi.string()
       .min(20)
       .max(5000)

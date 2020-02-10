@@ -10,7 +10,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 50
+    maxlength: 200
   },
   password: {
     type: String,
@@ -59,7 +59,7 @@ function validateUser(user) {
       .required(),
     name: Joi.string()
       .min(5)
-      .max(50)
+      .max(200)
       .required(),
     password: Joi.string()
       .min(5)

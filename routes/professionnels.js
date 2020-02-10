@@ -3,6 +3,12 @@ const {
   validateProfessionnel
 } = require("../models/professionnel");
 const { Category } = require("../models/category");
+const bcrypt = require("bcrypt");
+const _ = require("lodash");
+const { User } = require("../models/user");
+const jwt = require("jsonwebtoken");
+const admin = require("../middleware/admin");
+const auth = require("../middleware/auth");
 const express = require("express");
 const router = express.Router();
 
@@ -43,6 +49,7 @@ router.post("/", async (req, res) => {
   });
 
   let professionnel = new Professionnel({
+    isProfessionnel: true,
     name: req.body.name,
     description: req.body.description,
     urlImage: req.body.urlImage,
@@ -50,6 +57,7 @@ router.post("/", async (req, res) => {
     biographie: req.body.biographie,
     fee: req.body.fee,
     phone: req.body.phone,
+    password: req.body.password,
     review: req.body.review,
     category: {
       _id: category._id,
@@ -58,8 +66,27 @@ router.post("/", async (req, res) => {
       urlImage: category.urlImage
     }
   });
+  let user = new User(
+    _.pick(professionnel, [
+      "name",
+      "phone",
+      "password",
+      "address",
+      "isProfessionnel"
+    ])
+  );
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+  await user.save();
+  professionnel.password = user.password;
   professionnel = await professionnel.save();
   res.send(professionnel);
+  // const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey'));
+  const token = user.genrateAuthToken();
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(user, ["_id", "name", "phone"]));
+  // res.send(user);
 });
 
 router.put("/:id", async (req, res) => {
