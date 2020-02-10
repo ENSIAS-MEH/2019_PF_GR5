@@ -20,6 +20,7 @@ const userSchema = new Schema({
     unique: true
   },
   isAdmin: Boolean,
+  isProfessionnel: Boolean,
   urlImage: {
     type: String,
     required: false
@@ -30,6 +31,12 @@ const userSchema = new Schema({
     minlength: 5,
     maxlength: 50,
     unique: true
+  },
+  address: {
+    type: String,
+    required: false,
+    minlength: 5,
+    maxlength: 1000
   }
   // roles: []
   // operations: []
@@ -57,7 +64,10 @@ function validateUser(user) {
     password: Joi.string()
       .min(5)
       .max(50)
-      .required()
+      .required(),
+    address: Joi.string()
+      .min(5)
+      .max(1000)
   };
   return Joi.validate(user, schema);
 }

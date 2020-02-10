@@ -67,7 +67,9 @@ router.put("/:id", async (req, res) => {
     if (err) {
       return res
         .status(404)
-        .send(`The category with the id ${req.body.categoryId} was not found`);
+        .send(
+          `The subcategory with the id ${req.body.categoryId} was not found`
+        );
     }
     return category;
   });

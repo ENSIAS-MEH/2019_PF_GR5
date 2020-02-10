@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Joi = require("joi"); // this is a class
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { subcategorySchema } = require("./subcategory");
 
 var Schema = mongoose.Schema;
 
@@ -37,33 +36,62 @@ const professionnelSchema = new Schema({
     maxlength: 50,
     unique: true
   },
-  subcategory: [
-    {
-      type: subcategorySchema,
-      required: true
-    }
-  ],
+  category: {
+    type: new mongoose.Schema({
+      name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 200
+      },
+      description: {
+        type: String,
+        required: true,
+        minlength: 20,
+        maxlength: 5000
+      },
+      urlImage: {
+        type: String,
+        required: false
+      }
+    }),
+    required: true
+  },
   address: {
     type: String,
     required: true,
     minlength: 5,
     maxlength: 1000
+  },
+  review: {
+    type: Number,
+    required: true
+  },
+  fee: {
+    type: Number,
+    required: true
   }
 
   // roles: []
   // operations: []
 });
 
-userSchema.methods.genrateAuthToken = function() {
+const Professionnel = mongoose.model("Professionnel", professionnelSchema);
+
+professionnelSchema.statics.lookup = function(categoryId) {
+  return this.findOne({
+    "category._id": categoryId
+  });
+};
+
+professionnelSchema.methods.genrateAuthToken = function() {
   return jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin },
     config.get("jwtPrivateKey")
   );
 };
 
-const Professionnel = mongoose.model("Professionnel", professionnelSchema);
-
-function validateUser(professionnel) {
+function validateProfessionnel(professionnel) {
   const schema = {
     address: Joi.string()
       .min(5)
@@ -85,7 +113,10 @@ function validateUser(professionnel) {
     biographie: Joi.string()
       .min(20)
       .max(5000)
-      .required()
+      .required(),
+    review: Joi.number().required(),
+    fee: Joi.number().required(),
+    categoryId: Joi.objectId().required()
   };
   return Joi.validate(professionnel, schema);
 }

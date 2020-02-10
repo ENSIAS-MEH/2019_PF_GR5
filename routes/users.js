@@ -23,22 +23,9 @@ router.get("/:id", auth, async (req, res) => {
     if (err) {
       return res
         .status(404)
-        .send(`The subcategory with the id ${req.params.id} was not found`);
-    }
-    res.send(user);
-  });
-});
-
-// provide a token header
-router.get("/me", auth, async (req, res) => {
-  // const user = await User.findById(req.params.id);
-  User.findById(req.user._id, function(err, user) {
-    if (err) {
-      return res
-        .status(404)
         .send(`The user with the id ${req.params.id} was not found`);
     }
-    res.send(_.pick(user, ["_id", "name", "phone"]));
+    res.send(user);
   });
 });
 
@@ -60,7 +47,7 @@ router.post("/", async (req, res) => {
   //     phone: req.body.phone,
   //     password: req.body.password
   // });
-  user = new User(_.pick(req.body, ["name", "phone", "password"]));
+  user = new User(_.pick(req.body, ["name", "phone", "password", "address"]));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
@@ -93,7 +80,7 @@ router.put("/:id", async (req, res) => {
             .send(`The user with the id ${req.params.id} was not found`);
       }
       // Return the updated user
-      res.send(_.pick(user, ["_id", "name", "phone"]));
+      res.send(_.pick(user, ["name", "phone", "password", "address"]));
     }
   );
 });
@@ -109,7 +96,7 @@ router.delete("/:id", async (req, res) => {
           .send(`The user with the id ${req.params.id} was not found`);
     }
     // return the same user
-    res.send(_.pick(user, ["_id", "name", "phone"]));
+    res.send(_.pick(user, ["name", "phone", "password", "address"]));
   });
 });
 
