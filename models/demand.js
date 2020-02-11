@@ -47,7 +47,74 @@ const demandsSchema = new Schema({
     required: true
   },
   professional: {
-    type: new mongoose.Schema({}),
+    type: new mongoose.Schema({
+      biographie: {
+        type: String,
+        required: true,
+        minlength: 20,
+        maxlength: 5000
+      },
+      isProfessionnel: Boolean,
+      name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 200
+      },
+      password: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 1024,
+        unique: true
+      },
+      urlImage: {
+        type: String,
+        required: false
+      },
+      phone: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50,
+        unique: true
+      },
+      category: {
+        type: new mongoose.Schema({
+          name: {
+            type: String,
+            required: true,
+            minlength: 5,
+            maxlength: 200
+          },
+          description: {
+            type: String,
+            required: true,
+            minlength: 20,
+            maxlength: 5000
+          },
+          urlImage: {
+            type: String,
+            required: false
+          }
+        }),
+        required: true
+      },
+      address: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 1000
+      },
+      review: {
+        type: Number,
+        required: true
+      },
+      fee: {
+        type: Number,
+        required: true
+      }
+    }),
     required: true
   },
   user: {
