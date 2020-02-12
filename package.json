@@ -33,6 +33,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "pug": "^2.0.4",
+    "react-time-range": "^1.0.4",
     "winston": "^3.2.1"
   },
   "devDependencies": {

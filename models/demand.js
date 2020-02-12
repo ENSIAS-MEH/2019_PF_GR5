@@ -18,27 +18,6 @@ const demandsSchema = new Schema({
         minlength: 20,
         maxlength: 5000
       },
-      category: {
-        type: new mongoose.Schema({
-          name: {
-            type: String,
-            required: true,
-            minlength: 5,
-            maxlength: 200
-          },
-          description: {
-            type: String,
-            required: true,
-            minlength: 20,
-            maxlength: 5000
-          },
-          urlImage: {
-            type: String,
-            required: false
-          }
-        }),
-        required: true
-      },
       urlImage: {
         type: String,
         required: false
@@ -48,26 +27,6 @@ const demandsSchema = new Schema({
   },
   professional: {
     type: new mongoose.Schema({
-      biographie: {
-        type: String,
-        required: true,
-        minlength: 20,
-        maxlength: 5000
-      },
-      isProfessionnel: Boolean,
-      name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 200
-      },
-      password: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 1024,
-        unique: true
-      },
       urlImage: {
         type: String,
         required: false
@@ -79,36 +38,11 @@ const demandsSchema = new Schema({
         maxlength: 50,
         unique: true
       },
-      category: {
-        type: new mongoose.Schema({
-          name: {
-            type: String,
-            required: true,
-            minlength: 5,
-            maxlength: 200
-          },
-          description: {
-            type: String,
-            required: true,
-            minlength: 20,
-            maxlength: 5000
-          },
-          urlImage: {
-            type: String,
-            required: false
-          }
-        }),
-        required: true
-      },
-      address: {
+      name: {
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 1000
-      },
-      review: {
-        type: Number,
-        required: true
+        maxlength: 200
       },
       fee: {
         type: Number,
@@ -125,15 +59,6 @@ const demandsSchema = new Schema({
         minlength: 5,
         maxlength: 200
       },
-      password: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 1024,
-        unique: true
-      },
-      isAdmin: Boolean,
-      isProfessionnel: Boolean,
       urlImage: {
         type: String,
         required: false
@@ -144,12 +69,6 @@ const demandsSchema = new Schema({
         minlength: 5,
         maxlength: 50,
         unique: true
-      },
-      address: {
-        type: String,
-        required: false,
-        minlength: 5,
-        maxlength: 1000
       }
     }),
     required: true
@@ -206,6 +125,12 @@ demandsSchema.statics.lookup = function(professionalId) {
     "professional._id": professionalId
   });
 };
+
+function diffhours(dt2, dt1) {
+  var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= 60 * 60;
+  return Math.abs(Math.round(diff));
+}
 
 function validateDemand(demand) {
   const schema = {
