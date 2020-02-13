@@ -1,12 +1,9 @@
 const { Demand, validateDemand } = require("../models/demand");
-const { Professionnel } = require("./models/professionnel");
 const { SubCategory } = require("../models/subcategory");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const { User } = require("../models/user");
-const jwt = require("jsonwebtoken");
-const admin = require("../middleware/admin");
-const auth = require("../middleware/auth");
+const { Professionnel } = require("../models/professionnel");
 const express = require("express");
 const router = express.Router();
 
@@ -24,7 +21,7 @@ router.get("/:id", async (req, res) => {
     if (err) {
       return res
         .status(404)
-        .send(`The professionnel with the id ${req.params.id} was not found`);
+        .send(`The demand with the id ${req.params.id} was not found`);
     }
     res.send(demand);
   });
@@ -57,17 +54,17 @@ router.post("/", async (req, res) => {
     return user;
   });
 
-  const professional = await Professionnel.findById(
-    req.body.professionalId,
-    function(err, professional) {
+  const professionnel = await Professionnel.findById(
+    req.body.professionnelId,
+    function(err, professionnel) {
       if (err) {
         return res
           .status(404)
           .send(
-            `The professional with the id ${req.body.professionalId} was not found`
+            `The professional with the id ${req.body.professionnelId} was not found`
           );
       }
-      return professional;
+      return professionnel;
     }
   );
 
@@ -77,12 +74,13 @@ router.post("/", async (req, res) => {
     totalFee: req.body.totalFee,
     totalHours: req.body.totalHours,
     address: req.body.address,
-    professional: {
-      _id: professional._id,
-      name: professional.name,
-      phone: professional.phone,
-      urlImage: professional.urlImage,
-      fee: professional.fee
+    demandstatus: "In progress",
+    professionnel: {
+      _id: professionnel._id,
+      name: professionnel.name,
+      phone: professionnel.phone,
+      urlImage: professionnel.urlImage,
+      fee: professionnel.fee
     },
     user: {
       _id: user._id,
@@ -90,7 +88,7 @@ router.post("/", async (req, res) => {
       phone: user.phone
     },
     subcategory: {
-      _id: category._id,
+      _id: subcategory._id,
       name: subcategory.name,
       description: subcategory.description,
       urlImage: subcategory.urlImage
@@ -106,19 +104,42 @@ router.put("/:id", async (req, res) => {
   const { error } = validateDemand(req.body); // ES6 object distructuring feature
   if (error) return res.status(400).send(error.details[0].message);
 
-  const subcategory = SubCategory.findById(req.body.subcategoryId, function(
-    err,
-    subcategory
-  ) {
+  const subcategory = await SubCategory.findById(
+    req.body.subcategoryId,
+    function(err, subcategory) {
+      if (err) {
+        return res
+          .status(404)
+          .send(
+            `The subcategory with the id ${req.body.subcategoryId} was not found`
+          );
+      }
+      return subcategory;
+    }
+  );
+
+  const user = await User.findById(req.body.userId, function(err, user) {
     if (err) {
       return res
         .status(404)
-        .send(
-          `The subcategory with the id ${req.body.subcategoryId} was not found`
-        );
+        .send(`The user with the id ${req.body.userId} was not found`);
     }
-    return subcategory;
+    return user;
   });
+
+  const professionnel = await Professionnel.findById(
+    req.body.professionnelId,
+    function(err, professionnel) {
+      if (err) {
+        return res
+          .status(404)
+          .send(
+            `The professional with the id ${req.body.professionnelId} was not found`
+          );
+      }
+      return professionnel;
+    }
+  );
 
   // look up the demand
   // if not existing, return 404 - not found
@@ -131,11 +152,13 @@ router.put("/:id", async (req, res) => {
       totalFee: req.body.totalFee,
       totalHours: req.body.totalHours,
       address: req.body.address,
-      professional: {
-        _id: professional._id,
-        name: professional.name,
-        phone: professional.phone,
-        urlImage: professional.urlImage
+      demandstatus: req.body.demandstatus,
+      professionnel: {
+        _id: professionnel._id,
+        name: professionnel.name,
+        phone: professionnel.phone,
+        urlImage: professionnel.urlImage,
+        fee: professionnel.fee
       },
       user: {
         _id: user._id,
@@ -143,7 +166,7 @@ router.put("/:id", async (req, res) => {
         phone: user.phone
       },
       subcategory: {
-        _id: category._id,
+        _id: subcategory._id,
         name: subcategory.name,
         description: subcategory.description,
         urlImage: subcategory.urlImage

@@ -25,7 +25,7 @@ const demandsSchema = new Schema({
     }),
     required: true
   },
-  professional: {
+  professionnel: {
     type: new mongoose.Schema({
       urlImage: {
         type: String,
@@ -59,10 +59,6 @@ const demandsSchema = new Schema({
         minlength: 5,
         maxlength: 200
       },
-      urlImage: {
-        type: String,
-        required: false
-      },
       phone: {
         type: String,
         required: true,
@@ -81,9 +77,10 @@ const demandsSchema = new Schema({
   },
   totalFee: {
     type: Number,
+    default: 0,
     required: true
   },
-  status: {
+  demandstatus: {
     type: String,
     required: true,
     default: "In progress",
@@ -102,6 +99,7 @@ const demandsSchema = new Schema({
   },
   totalHours: {
     type: Number,
+    default: 0,
     required: true
   }
 });
@@ -120,9 +118,9 @@ demandsSchema.statics.lookup = function(userId) {
   });
 };
 
-demandsSchema.statics.lookup = function(professionalId) {
+demandsSchema.statics.lookup = function(professionnelId) {
   return this.findOne({
-    "professional._id": professionalId
+    "professionnel._id": professionnelId
   });
 };
 
@@ -134,16 +132,21 @@ function diffhours(dt2, dt1) {
 
 function validateDemand(demand) {
   const schema = {
-    startDate: Joi.date().required(),
-    endDate: Joi.date().required(),
-    professionalId: Joi.objectId().required(),
+    startDate: Joi.date()
+      .iso()
+      .required(),
+    endDate: Joi.date()
+      .iso()
+      .required(),
+    professionnelId: Joi.objectId().required(),
     userId: Joi.objectId().required(),
     subcategoryId: Joi.objectId().required(),
     totalFee: Joi.number().required(),
     totalHours: Joi.number().required(),
     address: Joi.string()
       .min(5)
-      .max(1000)
+      .max(1000),
+    demandstatus: Joi.string().required()
   };
   return Joi.validate(demand, schema);
 }

@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
     if (err) {
       return res
         .status(404)
-        .send(`The professionnel with the id ${req.params.id} was not found`);
+        .send(`The professional with the id ${req.params.id} was not found`);
     }
     res.send(professionnel);
   });
@@ -135,7 +135,7 @@ router.put("/:id", async (req, res) => {
           res
             .status(404)
             .send(
-              `The professionnel with the id ${req.params.id} was not found`
+              `The professional with the id ${req.params.id} was not found`
             );
       }
       // Return the updated professionnel
@@ -155,7 +155,7 @@ router.delete("/:id", async (req, res) => {
       if (!professionnel)
         return res
           .status(404)
-          .send(`The professionnel with the id ${req.params.id} was not found`);
+          .send(`The professional with the id ${req.params.id} was not found`);
     }
     // return the same professionnel
     res.send(professionnel);
