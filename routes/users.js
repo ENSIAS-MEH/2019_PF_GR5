@@ -25,7 +25,7 @@ router.get("/:id", auth, async (req, res) => {
         .status(404)
         .send(`The user with the id ${req.params.id} was not found`);
     }
-    res.send(user);
+    res.send(_.pick(user, ["_id", "name", "phone", "password", "address"]));
   });
 });
 
@@ -55,8 +55,8 @@ router.post("/", async (req, res) => {
   const token = user.genrateAuthToken();
   res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "phone"]));
-  res.send(user);
+    .send(_.pick(user, ["_id", "name", "phone", "password", "address"]));
+  //res.send(user);
 });
 
 router.put("/:id", async (req, res) => {
@@ -80,7 +80,7 @@ router.put("/:id", async (req, res) => {
             .send(`The user with the id ${req.params.id} was not found`);
       }
       // Return the updated user
-      res.send(_.pick(user, ["name", "phone", "password", "address"]));
+      res.send(_.pick(user, ["_id", "name", "phone", "password", "address"]));
     }
   );
 });
